@@ -9,9 +9,26 @@ import profileRoutes from "./routes/profileRoutes";
 dotenv.config();
 
 const app = express();
-const port = Number(process.env.PORT ?? 4000);
+const port = Number(process.env.PORT ?? 5000);
 
-app.use(cors());
+// Configure CORS for GitHub Pages and local development
+const allowedOrigins = [
+  "http://localhost:4173",
+  "http://localhost:3000",
+  "http://127.0.0.1:4173",
+  "https://srushtiinvent.github.io",
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

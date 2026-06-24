@@ -3,6 +3,7 @@
     "target": "es2022",
     "useDefineForClassFields": true,
     "lib": ["dom", "dom.iterable", "es2022"],
+    "types": ["vite/client"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,

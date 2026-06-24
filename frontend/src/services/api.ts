@@ -1,5 +1,18 @@
 const AUTH_KEY = "AEROPATH_AUTH_TOKEN";
 
+// Support both local dev and production
+const getApiBaseUrl = (): string => {
+  if (typeof window === "undefined") return "";
+  
+  // Development: proxy through vite
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    return "";
+  }
+  
+  // Production: use environment variable or deployed backend URL
+  return import.meta.env.VITE_API_URL || "https://aeropath-backend.vercel.app";
+};
+
 export const getAuthToken = (): string | null => {
   if (typeof window === "undefined") return null;
   return window.localStorage.getItem(AUTH_KEY);
@@ -17,7 +30,10 @@ const apiFetch = async <T>(path: string, init: RequestInit = {}): Promise<T> => 
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 
-  const response = await fetch(path, { ...init, headers, credentials: "include" });
+  const baseUrl = getApiBaseUrl();
+  const url = baseUrl ? `${baseUrl}${path}` : path;
+
+  const response = await fetch(url, { ...init, headers, credentials: "include" });
   if (!response.ok) {
     const body = await response.json().catch(() => null);
     const message = body?.error ?? response.statusText;

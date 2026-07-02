@@ -1,49 +1,25 @@
-import { type Request, type Response, type NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from 'express';
+import admin from '../config/firebase';
 
-interface JwtPayload {
-  userId: string;
-  email: string;
-  name: string;
+export interface AuthedRequest extends Request {
+  uid?: string;
+  user?: any;
 }
 
-const JWT_SECRET = process.env.JWT_SECRET;
-if (!JWT_SECRET) {
-  throw new Error("JWT_SECRET is required in environment variables");
-}
-
-export interface AuthenticatedRequest extends Request {
-  user: { id: string; email: string; name: string };
-}
-
-export const authMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void => {
-  const authorization = req.headers.authorization;
-  if (!authorization || !authorization.startsWith("Bearer ")) {
-    res.status(401).json({ error: "Authorization header missing or invalid." });
-    return;
-  }
-
-  const token = authorization.replace("Bearer ", "").trim();
-
+export const authMiddleware = async (req: AuthedRequest, res: Response, next: NextFunction) => {
   try {
-    const payload = jwt.verify(token, JWT_SECRET) as JwtPayload;
-    if (!payload?.userId || !payload?.email || !payload?.name) {
-      res.status(401).json({ error: "Invalid authentication token." });
-      return;
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'Missing or invalid Authorization header' });
     }
-
-    (req as AuthenticatedRequest).user = {
-      id: payload.userId,
-      email: payload.email,
-      name: payload.name,
-    };
-
-    next();
-  } catch (error) {
-    res.status(401).json({ error: "Unauthorized token validation failed." });
+    const token = authHeader.split(' ')[1] as string;
+    const decoded = await admin.auth().verifyIdToken(token);
+    req.uid = decoded.uid;
+    req.user = decoded;
+    return next();
+  } catch (err: any) {
+    return res.status(401).json({ error: 'Unauthorized', detail: err.message });
   }
 };
+
+export default authMiddleware;

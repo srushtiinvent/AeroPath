@@ -10,7 +10,7 @@ datasource db {
 model User {
   id               String            @id @default(uuid())
   email            String            @unique
-  passwordHash     String
+  firebaseUid      String            @unique
   name             String
   tagline          String?
   avatarInitials   String?
@@ -25,8 +25,7 @@ model UserSettings {
   id                   String  @id @default(uuid())
   userId               String  @unique
   user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  notificationsEnabled Boolean @default(true)
-  darkMode             Boolean @default(false)
+
   privacyMode          Boolean @default(false)
 }
 

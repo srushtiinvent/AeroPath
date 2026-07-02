@@ -29,79 +29,108 @@ const LoginPage = ({ onAuthSuccess }: { onAuthSuccess: () => void }) => {
   };
 
   return (
-    <div className="mx-auto max-w-2xl rounded-3xl border border-slate-200/80 bg-white p-8 shadow-soft dark:border-slate-700/60 dark:bg-slate-950/95">
-      <div className="mb-8 text-center">
-        <p className="text-sm uppercase tracking-[0.3em] text-sky-500">AeroPath Auth</p>
-        <h1 className="mt-4 text-3xl font-semibold">{isSignup ? "Create your AeroPath account" : "Welcome back to AeroPath"}</h1>
-        <p className="mt-2 text-slate-500 dark:text-slate-400">
-          {isSignup ? "Sign up to save your itinerary and boarding passes." : "Log in to continue managing your travel timeline."}
-        </p>
-      </div>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-white via-slate-50 to-white px-4 dark:from-slate-950 dark:via-slate-900/50 dark:to-slate-950">
+      <div className="w-full max-w-md rounded-2xl border border-slate-200/50 bg-white/95 p-8 backdrop-blur-xl shadow-xl dark:border-slate-800/50 dark:bg-slate-950/95">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <div className="mb-4 inline-flex rounded-lg bg-gradient-to-br from-sky-400 to-blue-600 px-4 py-2">
+            <span className="font-bold text-white">✈ AeroPath</span>
+          </div>
+          <h1 className="mt-4 text-2xl font-bold text-slate-900 dark:text-white">
+            {isSignup ? "Create Account" : "Welcome Back"}
+          </h1>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+            {isSignup
+              ? "Join thousands of travelers managing their journeys"
+              : "Log in to your travel timeline"}
+          </p>
+        </div>
 
-      {isSignup ? (
-        <div className="grid gap-4">
+        {/* Signup Fields */}
+        {isSignup && (
+          <div className="mb-6 grid gap-4">
+            <label className="block text-sm text-slate-600 dark:text-slate-300">
+              Full Name
+              <input
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                placeholder="John Doe"
+                className="mt-2 w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-sky-400 dark:focus:ring-sky-900"
+              />
+            </label>
+            <label className="block text-sm text-slate-600 dark:text-slate-300">
+              Tagline
+              <input
+                value={tagline}
+                onChange={(event) => setTagline(event.target.value)}
+                placeholder="e.g., Travel Enthusiast"
+                className="mt-2 w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-sky-400 dark:focus:ring-sky-900"
+              />
+            </label>
+          </div>
+        )}
+
+        {/* Email & Password */}
+        <div className="mb-6 grid gap-4">
           <label className="block text-sm text-slate-600 dark:text-slate-300">
-            Name
+            Email Address
             <input
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-sky-400 dark:focus:ring-sky-900"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@example.com"
+              type="email"
+              className="mt-2 w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-sky-400 dark:focus:ring-sky-900"
             />
           </label>
           <label className="block text-sm text-slate-600 dark:text-slate-300">
-            Tagline
+            Password
             <input
-              value={tagline}
-              onChange={(event) => setTagline(event.target.value)}
-              placeholder="e.g. MNIT Jaipur"
-              className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-sky-400 dark:focus:ring-sky-900"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="••••••••"
+              className="mt-2 w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-sky-400 dark:focus:ring-sky-900"
             />
           </label>
         </div>
-      ) : null}
 
-      <div className="mt-6 grid gap-4">
-        <label className="block text-sm text-slate-600 dark:text-slate-300">
-          Email
-          <input
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="you@example.com"
-            className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-sky-400 dark:focus:ring-sky-900"
-          />
-        </label>
-        <label className="block text-sm text-slate-600 dark:text-slate-300">
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="••••••••"
-            className="mt-2 w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-sky-400 dark:focus:ring-sky-900"
-          />
-        </label>
-      </div>
+        {/* Error */}
+        {error && (
+          <div className="mb-6 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-900/20 dark:text-red-300">
+            {error}
+          </div>
+        )}
 
-      {error ? <p className="mt-4 rounded-3xl bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:bg-rose-900/10 dark:text-rose-200">{error}</p> : null}
-
-      <button
-        type="button"
-        onClick={handleSubmit}
-        disabled={isLoading}
-        className="mt-6 w-full rounded-3xl bg-sky-500 px-6 py-4 text-sm font-semibold text-white transition hover:bg-sky-600 disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {isLoading ? "Processing..." : isSignup ? "Sign up" : "Log in"}
-      </button>
-
-      <div className="mt-6 flex items-center justify-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-        <span>{isSignup ? "Already have an account?" : "New to AeroPath?"}</span>
+        {/* Submit Button */}
         <button
           type="button"
-          onClick={() => setIsSignup((current) => !current)}
-          className="font-semibold text-sky-600 transition hover:text-sky-500 dark:text-sky-300 dark:hover:text-sky-200"
+          onClick={handleSubmit}
+          disabled={isLoading}
+          className="w-full rounded-lg bg-gradient-to-r from-sky-500 to-blue-600 px-6 py-2.5 font-semibold text-white transition hover:from-sky-600 hover:to-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {isSignup ? "Log in" : "Sign up"}
+          {isLoading ? "Processing..." : isSignup ? "Create Account" : "Log In"}
         </button>
+
+        {/* Toggle */}
+        <div className="mt-6 text-center text-sm">
+          <span className="text-slate-600 dark:text-slate-400">
+            {isSignup ? "Already have an account? " : "New to AeroPath? "}
+          </span>
+          <button
+            type="button"
+            onClick={() => setIsSignup((current) => !current)}
+            className="font-semibold text-sky-600 transition hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300"
+          >
+            {isSignup ? "Log In" : "Sign Up"}
+          </button>
+        </div>
+
+        {/* Divider */}
+        <div className="mt-6 border-t border-slate-200 pt-6 dark:border-slate-800">
+          <p className="text-center text-xs text-slate-500 dark:text-slate-500">
+            By continuing, you agree to our Terms of Service and Privacy Policy
+          </p>
+        </div>
       </div>
     </div>
   );

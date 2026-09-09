@@ -23,7 +23,7 @@ body.dark-mode {
 
 .container {
     width: 100%;
-    max-width: 400px;
+    max-width: 800px;
 }
 
 .login-box {
@@ -33,6 +33,13 @@ body.dark-mode {
     box-shadow: 0 24px 80px rgba(22, 44, 58, 0.12);
     padding: 40px;
     transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.dashboard {
+    animation: fadeIn 0.3s ease-in;
+    width: 100%;
 }
 
 body.dark-mode .login-box {
@@ -73,7 +80,7 @@ body.dark-mode .btn-primary {
 }
 
 body.dark-mode .btn-secondary {
-    background: #ef4444;
+    background: #75909c;
 }
 
 body.dark-mode .card {
@@ -223,23 +230,6 @@ body.dark-mode .btn-primary {
     cursor: not-allowed;
 }
 
-.btn-secondary {
-    width: 100%;
-    padding: 12px;
-    background: #75909c;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-    background: #5f7d86;
-}
-
 .toggle-text {
     text-align: center;
     color: #5A6B73;
@@ -300,47 +290,103 @@ body.dark-mode .theme-toggle {
 
 .dashboard {
     animation: fadeIn 0.3s ease-in;
+    width: 100%;
 }
 
 .dashboard h1 {
     text-align: center;
     margin-bottom: 10px;
+    font-size: 32px;
 }
 
 .dashboard .subtitle {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    font-size: 16px;
 }
 
 .dashboard-content {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
-    margin-bottom: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
 }
 
 .card {
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
+    background: linear-gradient(135deg, rgba(117, 144, 156, 0.1) 0%, rgba(159, 181, 196, 0.1) 100%);
+    border: 1px solid #C9D5DB;
+    border-radius: 12px;
+    padding: 30px 20px;
     transition: all 0.3s ease;
+    text-align: center;
+    cursor: pointer;
 }
 
 .card:hover {
-    border-color: #667eea;
-    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.1);
+    border-color: #75909c;
+    box-shadow: 0 10px 30px rgba(117, 144, 156, 0.2);
+    transform: translateY(-4px);
 }
 
 .card h3 {
-    color: #333;
-    font-size: 16px;
-    margin-bottom: 8px;
+    color: #273238;
+    font-size: 18px;
+    margin-bottom: 12px;
+    font-weight: 600;
 }
 
 .card p {
-    color: #666;
-    font-size: 13px;
+    color: #5A6B73;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+body.dark-mode .card {
+    background: linear-gradient(135deg, rgba(117, 144, 156, 0.15) 0%, rgba(95, 125, 134, 0.15) 100%);
+    border-color: rgba(148, 163, 184, 0.25);
+}
+
+body.dark-mode .card:hover {
+    border-color: #75909c;
+    box-shadow: 0 10px 30px rgba(117, 144, 156, 0.3);
+}
+
+body.dark-mode .card h3 {
+    color: #f8fafc;
+}
+
+body.dark-mode .card p {
+    color: #94a3b8;
+}
+
+.btn-secondary {
+    width: 100%;
+    padding: 12px;
+    background: #75909c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn-secondary:hover {
+    background: #5f7d86;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(117, 144, 156, 0.3);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .dashboard-content {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 480px) {
@@ -350,6 +396,10 @@ body.dark-mode .theme-toggle {
 
     h1 {
         font-size: 20px;
+    }
+
+    .dashboard h1 {
+        font-size: 24px;
     }
 
     .logo {
